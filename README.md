@@ -20,9 +20,9 @@ Este projeto é uma aplicação web para análise e previsão de preços de pass
 1. **Clonar o Repositório**:
    Clone o repositório para o seu ambiente local:
    ```bash
-   git clone https://github.com/usuario/flight-price-analysis.git ```
+   git clone https://github.com/usuario/flight-price-analysis.git 
    
 2. Instalar as Dependências: Para instalar todas as dependências necessárias, use o seguinte comando:
 ```bash
-pip install pandas seaborn matplotlib flask joblib
-pip install scikit-learn xgboost``` 
+   pip install pandas seaborn matplotlib flask joblib
+   pip install scikit-learn xgboost
