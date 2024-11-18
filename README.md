@@ -36,12 +36,6 @@ Na tela de simulação é possível fazer uma estimativa de preço de passagens 
 
 ![Tela de Estatísticas](imagens/simulacao.png)
 
-## Como Rodar o Projeto
-
-(continue with the rest of the README as you had it)
-
-
-
 ## Tecnologias Utilizadas
 
 - **Flask**: Framework para desenvolvimento da aplicação web.
