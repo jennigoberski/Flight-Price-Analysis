@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas - Flight Price Analysis</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Sour Gummy', sans-serif;
+            background-image: url("{{ url_for('static', filename='wallpaper.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        .container {
+            margin-top: 5%;
+        }
+
+        .card {
+            background-color: rgba(50, 20, 70, 0.85);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #ffb3ff;
+        }
+
+        .btn-expand {
+            background-color: #ffb3ff;
+            color: #4a148c;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .question-card {
+            margin-bottom: 20px;
+        }
+
+        .card-content {
+            color: #e1bee7;
+        }
+
+        .answer-content {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .btn-back {
+            background-color: #ffb3ff;
+            color: #4a148c;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #80deea;
+        }
+
+        .balloon {
+            display: none;
+            background-color: #ffb3ff;
+            color: #4a148c;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .plot-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .plot-container img {
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .summary-table {
+            margin-top: 20px;
+        }
+
+        .summary-table th,
+        .summary-table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .summary-table th {
+            background-color: #4a148c;
+            color: white;
+        }
+
+        .summary-table td {
+            background-color: #e1bee7;
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="{{ url_for('index') }}" class="btn btn-back waves-effect waves-light">
+        Voltar
+    </a>
+</div>
+
+<div class="container">
+    <div class="card question-card">
+        <div class="card-content">
+            <span class="card-title">1) O preço varia de acordo com a companhia aérea?</span>
+            <a href="#" class="btn-expand" id="expand-btn-1">Expandir para resposta</a>
+            <div class="answer-content" id="answer-content-1">
+                <div class="plot-container">
+                    <img src="" id="plot-1" alt="Distribuição de Preços por Companhia Aérea">
+                    <img src="" id="plot-2" alt="Preço Médio por Companhia Aérea">
+                </div>
+            </div>
+
+            <div class="balloon" id="balloon-1">
+            </div>
+        </div>
+    </div>
+
+    <div class="card question-card">
+        <div class="card-content">
+            <span class="card-title">2) O preço varia de acordo com a janela de reserva?</span>
+            <a href="#" class="btn-expand" id="expand-btn-2">Expandir para resposta</a>
+            <div class="answer-content" id="answer-content-2">
+                <div class="plot-container">
+                    <img src="" id="plot-3" alt="Comparação de Preços por Janela de Reserva">
+                    <img src="" id="plot-4" alt="Preço Médio por Janela de Reserva">
+                </div>
+            </div>
+
+            <div class="balloon" id="balloon-2">
+            </div>
+        </div>
+    </div>
+
+    <div class="card question-card">
+        <div class="card-content">
+            <span class="card-title">3) O preço varia de acordo com o horário de partida e chegada?</span>
+            <a href="#" class="btn-expand" id="expand-btn-3">Expandir para resposta</a>
+            <div class="answer-content" id="answer-content-3">
+                <div class="plot-container">
+                    <h5>Distribuição de Preços por Horário de Partida</h5>
+                    <img src="" id="plot-5" alt="Distribuição de Preços por Horário de Partida">
+                    <h5>Preço Médio por Horário de Partida</h5>
+                    <img src="" id="plot-6" alt="Preço Médio por Horário de Partida">
+                </div>
+                <div class="plot-container">
+                    <h5>Distribuição de Preços por Horário de Chegada</h5>
+                    <img src="" id="plot-7" alt="Distribuição de Preços por Horário de Chegada">
+                    <h5>Preço Médio por Horário de Chegada</h5>
+                    <img src="" id="plot-8" alt="Preço Médio por Horário de Chegada">
+                </div>
+            </div>
+
+            <div class="balloon" id="balloon-3">
+            </div>
+        </div>
+    </div>
+
+    <div class="card question-card">
+        <div class="card-content">
+            <span class="card-title">4) O preço varia de acordo com a cidade de origem e destino?</span>
+            <a href="#" class="btn-expand" id="expand-btn-4">Expandir para resposta</a>
+            <div class="answer-content" id="answer-content-4">
+                <div class="plot-container">
+                    <img src="" id="plot-9" alt="Distribuição do Preço por Cidades de Origem e Destino">
+                    <img src="" id="plot-10" alt="Preço Médio por Cidades de Origem e Destino">
+                </div>
+            </div>
+
+            <div class="balloon" id="balloon-4">
+            </div>
+        </div>
+    </div>
+
+    <div class="card question-card">
+        <div class="card-content">
+            <span class="card-title">5) O preço varia de acordo com a classe de voo?</span>
+            <a href="#" class="btn-expand" id="expand-btn-5">Expandir para resposta</a>
+            <div class="answer-content" id="answer-content-5">
+                <div class="plot-container">
+                    <img src="" id="plot-11" alt="Distribuição de Preços por Classe de Voo">
+                    <img src="" id="plot-12" alt="Preço Médio por Classe de Voo">
+                </div>
+            </div>
+
+            <div class="balloon" id="balloon-5">
+            </div>
+        </div>
+    </div>
+
+    <div class="card question-card">
+        <div class="card-content">
+            <span class="card-title">Resumo das Variáveis</span>
+            <a href="#" class="btn-expand" id="expand-btn-6">Expandir para ver resumo</a>
+            <div class="answer-content" id="answer-content-6">
+                <table class="summary-table">
+                    <thead>
+                    <tr>
+                        <th>Variável</th>
+                        <th>Descrição</th>
+                        <th>Impacto no Preço</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>Companhia Aérea</td>
+                        <td>A companhia aérea pode influenciar os preços devido a políticas tarifárias distintas.</td>
+                        <td>Alto</td>
+                    </tr>
+
+                    <tr>
+                        <td>Janela de Reserva</td>
+                        <td>A antecedência da reserva pode impactar no preço final, com preços mais baixos geralmente
+                            encontrados em compras antecipadas.
+                        </td>
+                        <td>Moderado</td>
+                    </tr>
+
+                    <tr>
+                        <td>Horário de Partida/Chegada</td>
+                        <td>Os horários de voo também afetam os preços, com voos em horários de pico geralmente mais
+                            caros.
+                        </td>
+                        <td>Moderado</td>
+                    </tr>
+
+                    <tr>
+                        <td>Cidades de Origem/Destino</td>
+                        <td>A distância entre a cidade de origem e o destino influencia o preço do bilhete.</td>
+                        <td>Alto</td>
+                    </tr>
+
+                    <tr>
+                        <td>Classe de Voo</td>
+                        <td>A classe de voo (econômica, executiva, etc.) tem um impacto significativo no preço.</td>
+                        <td>Alto</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    var dataLoaded1 = false;
+    var dataLoaded2 = false;
+    var dataLoaded3 = false;
+    var dataLoaded4 = false;
+    var dataLoaded5 = false;
+    var dataLoaded6 = false;
+
+    function loadQuestion1Data() {
+        $.ajax({
+            url: "/statistics/question1",
+            method: "GET",
+            success: function (response) {
+                $('#plot-1').attr("src", "data:image/png;base64," + response.plot_url_1);
+                $('#plot-2').attr("src", "data:image/png;base64," + response.plot_url_2);
+                $('#balloon-1').html(response.conclusion);
+                $('#answer-content-1').show();
+                $('#balloon-1').show();
+                dataLoaded1 = true;
+            },
+            error: function () {
+                alert("Erro ao carregar os dados da questão 1.");
+            }
+        });
+    }
+
+    function loadQuestion2Data() {
+        $.ajax({
+            url: "/statistics/question2",
+            method: "GET",
+            success: function (response) {
+                $('#plot-3').attr("src", "data:image/png;base64," + response.plot_url_3);
+                $('#plot-4').attr("src", "data:image/png;base64," + response.plot_url_4);
+                $('#balloon-2').html(response.conclusion);
+                $('#answer-content-2').show();
+                $('#balloon-2').show();
+                dataLoaded2 = true;
+            },
+            error: function () {
+                alert("Erro ao carregar os dados da questão 2.");
+            }
+        });
+    }
+
+    function loadQuestion3Data() {
+        $.ajax({
+            url: "/statistics/question3",
+            method: "GET",
+            success: function (response) {
+                $('#plot-5').attr("src", "data:image/png;base64," + response.plot_url_5);
+                $('#plot-6').attr("src", "data:image/png;base64," + response.plot_url_6);
+                $('#plot-7').attr("src", "data:image/png;base64," + response.plot_url_7);
+                $('#plot-8').attr("src", "data:image/png;base64," + response.plot_url_8);
+                $('#balloon-3').html(response.conclusion);
+                $('#answer-content-3').show();
+                $('#balloon-3').show();
+                dataLoaded3 = true;
+            },
+            error: function () {
+                alert("Erro ao carregar os dados da questão 3.");
+            }
+        });
+    }
+
+    function loadQuestion4Data() {
+        $.ajax({
+            url: "/statistics/question4",
+            method: "GET",
+            success: function (response) {
+                $('#plot-9').attr("src", "data:image/png;base64," + response.plot_url_9);
+                $('#plot-10').attr("src", "data:image/png;base64," + response.plot_url_10);
+                $('#balloon-4').html(response.conclusion);
+                $('#answer-content-4').show();
+                $('#balloon-4').show();
+                dataLoaded4 = true;
+            },
+            error: function () {
+                alert("Erro ao carregar os dados da questão 4.");
+            }
+        });
+    }
+
+    function loadQuestion5Data() {
+        $.ajax({
+            url: "/statistics/question5",
+            method: "GET",
+            success: function (response) {
+                $('#plot-11').attr("src", "data:image/png;base64," + response.plot_url_11);
+                $('#plot-12').attr("src", "data:image/png;base64," + response.plot_url_12);
+                $('#balloon-5').html(response.conclusion);
+                $('#answer-content-5').show();
+                $('#balloon-5').show();
+                dataLoaded5 = true;
+            },
+            error: function () {
+                alert("Erro ao carregar os dados da questão 5.");
+            }
+        });
+    }
+
+    function loadSummaryTableData() {
+        $.ajax({
+            url: "/statistics/summary",
+            method: "GET",
+            success: function (response) {
+                var tableBody = $('#summary-table-body');
+                tableBody.empty();
+
+                response.summaryData.forEach(function (row) {
+                    var newRow = '<tr><td>' + row.variable + '</td><td>' + row.description + '</td><td>' + row.impact + '</td></tr>';
+                    tableBody.append(newRow);
+                });
+
+                $('#answer-content-6').show();
+                dataLoaded6 = true;
+            },
+            error: function () {
+                alert("Erro ao carregar os dados da tabela resumo.");
+            }
+        });
+    }
+
+    $('#expand-btn-1').click(function () {
+        if (!dataLoaded1) loadQuestion1Data();
+        $('#answer-content-1').toggle();
+    });
+
+    $('#expand-btn-2').click(function () {
+        if (!dataLoaded2) loadQuestion2Data();
+        $('#answer-content-2').toggle();
+    });
+
+    $('#expand-btn-3').click(function () {
+        if (!dataLoaded3) loadQuestion3Data();
+        $('#answer-content-3').toggle();
+    });
+
+    $('#expand-btn-4').click(function () {
+        if (!dataLoaded4) loadQuestion4Data();
+        $('#answer-content-4').toggle();
+    });
+
+    $('#expand-btn-5').click(function () {
+        if (!dataLoaded5) loadQuestion5Data();
+        $('#answer-content-5').toggle();
+    });
+
+    $('#expand-btn-6').click(function () {
+        if (!dataLoaded6) loadSummaryTableData();
+        $('#answer-content-6').toggle();
+    });
+</script>
+
+</body>
+</html>

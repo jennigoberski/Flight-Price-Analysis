@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Flight Price Analysis</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Sour Gummy', sans-serif;
+            background-image: url("{{ url_for('static', filename='wallpaper.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        .container {
+            margin-top: 5%;
+        }
+
+        .card {
+            background-color: rgba(50, 20, 70, 0.85);
+            border-radius: 8px;
+        }
+
+        h4, h5 {
+            color: #ffb3ff;
+        }
+
+        .section-text {
+            color: #e1bee7;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .kaggle-link a {
+            color: #80deea;
+            text-decoration: underline;
+        }
+
+        .btn-back {
+            background-color: #ffb3ff;
+            color: #4a148c;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .author-section {
+            margin-top: 50px;
+            text-align: center;
+            color: rgba(50, 20, 70, 0.85);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="{{ url_for('index') }}" class="btn btn-back waves-effect waves-light">
+        Voltar
+    </a>
+</div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <h4>Sobre o Dataset</h4>
+                <p class="section-text">
+                    Este dataset foi coletado com a ferramenta de web scraping Octoparse a partir do site Ease My Trip, cobrindo opções de reservas de voos nas principais cidades metropolitanas da Índia.
+                    A coleta de dados durou 50 dias, de 11 de fevereiro a 31 de março de 2022, capturando 300.261 opções distintas de reserva de voos, com informações sobre voos em classe econômica e executiva.
+                </p>
+                <p class="section-text kaggle-link">
+                    O dataset está disponível para consulta em:
+                    <a href="https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction/data" target="_blank">Kaggle - Flight Price Prediction</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <h5>Características do Dataset</h5>
+                <ul class="feature-list section-text">
+                    <li><strong>Airline</strong>: Nome da companhia aérea (6 companhias).</li>
+                    <li><strong>Flight</strong>: Código do voo.</li>
+                    <li><strong>Source City</strong>: Cidade de origem (6 cidades).</li>
+                    <li><strong>Departure Time</strong>: Hora de partida, categorizada em 6 intervalos de tempo.</li>
+                    <li><strong>Stops</strong>: Número de paradas entre as cidades de origem e destino (3 valores possíveis).</li>
+                    <li><strong>Arrival Time</strong>: Hora de chegada, categorizada em 6 intervalos de tempo.</li>
+                    <li><strong>Destination City</strong>: Cidade de destino (6 cidades).</li>
+                    <li><strong>Class</strong>: Classe do assento (Econômica ou Executiva).</li>
+                    <li><strong>Duration</strong>: Duração total da viagem entre as cidades (em horas).</li>
+                    <li><strong>Days Left</strong>: Dias restantes até a data de partida.</li>
+                    <li><strong>Price</strong>: Preço do bilhete (variável alvo).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <h4>Objetivo do Projeto</h4>
+                <p class="section-text">
+                    Este projeto tem dois objetivos principais:
+                </p>
+
+                <h5>Análise de Dados</h5>
+                <p class="section-text">
+                    A análise de dados busca responder às seguintes perguntas de pesquisa através de estatísticas:
+                </p>
+                <ul class="feature-list section-text">
+                    <li>O preço varia de acordo com as companhias aéreas?</li>
+                    <li>Como o preço é afetado quando os ingressos são comprados com apenas 1 ou 2 dias de antecedência?</li>
+                    <li>O preço do bilhete muda com base no horário de partida e chegada?</li>
+                    <li>Como o preço varia entre diferentes cidades de origem e destino?</li>
+                    <li>Como o preço do bilhete varia entre as classes Econômica e Executiva?</li>
+                </ul>
+
+                <h5>Modelo de Machine Learning</h5>
+                <p class="section-text">
+                    A segunda parte do projeto é a criação de um modelo de Machine Learning. Este modelo usará algumas das características do dataset fornecidas pelo usuário e calculará o preço médio do bilhete com base nas entradas.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-section">
+        <p>Autora: Jennifer M. de P. Goberski</p>
+        <p>RGM: 25810723</p>
+        <p>Disciplina: Tópicos especiais em software</p>
+        <p>Curitiba, novembro de 2024</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
