@@ -50,7 +50,7 @@ Na tela de simulação é possível fazer uma estimativa de preço de passagens 
 1. **Clonar o Repositório**:
    Clone o repositório para o seu ambiente local:
    ```bash
-   git clone https://github.com/usuario/flight-price-analysis.git 
+   git clone https://github.com/jennigoberski/flight-price-analysis.git 
    
 2. Instalar as Dependências: Para instalar todas as dependências necessárias, use o seguinte comando:
 ```bash
